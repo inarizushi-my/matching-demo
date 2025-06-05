@@ -13,7 +13,7 @@ function RecruitList() {
         </Link>
       </div>
 
-      <h2 className="text-2xl font-bold mb-6 text-center">🎵 募集一覧</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center">募集一覧</h2>
 
       {/* スロット形式（スマホ2段・PC1段） */}
       <div className="flex flex-col gap-4 mb-16">
@@ -37,7 +37,7 @@ function RecruitList() {
 
               {/* 募集状況＋ボタン（右） */}
               <div className="flex items-center gap-4">
-                <span className="text-gray-600">{item.status}</span>
+                <span className="text-gray-600">募集状況：{item.status}</span>
                 <button
                   onClick={() => alert(`${item.title} に立候補しました！（仮）`)}
                   className="w-fit bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"

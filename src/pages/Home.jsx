@@ -28,6 +28,11 @@ function Home() {
               新規登録
             </button>
           </Link>
+          <Link to="/matching" className="w-full">
+            <button className="w-full max-w-xs mx-auto text-lg md:text-xl bg-yellow-500 text-white py-4 rounded hover:bg-yellow-600 transition">
+              マッチング
+            </button>
+          </Link>
         </div>
       </div>
     </div>
