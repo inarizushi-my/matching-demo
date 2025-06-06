@@ -27,24 +27,26 @@ function RecruitDetail() {
       {/* 曲タイトル */}
       <h1 className="text-2xl font-bold mb-4 text-center">{item.title}</h1>
 
-      {/* 詳細情報の表示（横並びレイアウト） */}
+      {/* 詳細情報の表示 */}
       <div className="bg-white shadow-md rounded p-4 space-y-4">
-        <div className="flex">
-          <h2 className="font-semibold text-gray-700 w-32">イベント</h2>
-          <p className="text-gray-800">{item.event}</p>
-        </div>
-        <div className="flex">
-          <h2 className="font-semibold text-gray-700 w-32">募集状況</h2>
-          <p className="text-gray-800">{item.status}</p>
-        </div>
-        {/* 必要に応じて以下に項目を追加可能 */}
-        {/* 
-        <div className="flex">
-          <h2 className="font-semibold text-gray-700 w-32">ジャンル</h2>
-          <p className="text-gray-800">{item.genre}</p>
-        </div> 
-        */}
+        <InfoRow label="イベント" value={item.event} />
+        <InfoRow label="作曲者" value={item.composer || "未記入"} />
+        <InfoRow label="アーティスト" value={item.artist || "未記入"} />
+        <InfoRow label="アンサリーダー" value={`${item.leaderName}（${item.leaderGeneration}代）`} />
+        <InfoRow label="募集人数" value={`${item.recruitCount}人`} />
+        <InfoRow label="ジャンル" value={(item.genres && item.genres.length > 0) ? item.genres.join("、") : "未記入"} />
+        {item.comment && <InfoRow label="コメント" value={item.comment} />}
       </div>
+    </div>
+  );
+}
+
+// 共通の1行表示コンポーネント
+function InfoRow({ label, value }) {
+  return (
+    <div className="flex">
+      <h2 className="font-semibold text-gray-700 w-32 shrink-0">{label}</h2>
+      <p className="text-gray-800">{value}</p>
     </div>
   );
 }

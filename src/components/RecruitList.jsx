@@ -62,7 +62,7 @@ function RecruitList() {
             <div className="flex justify-between items-center w-full text-sm md:gap-6 md:w-auto">
               <span className="text-gray-700">{item.event}</span>
               <div className="flex items-center gap-4">
-                <span className="text-gray-600">募集状況：{item.status}</span>
+              <span className="text-gray-600">募集人数：{item.recruitCount}人</span>
                 <button
                   onClick={() => alert(`${item.title} に立候補しました！（仮）`)}
                   className="w-fit bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600"

@@ -3,27 +3,36 @@
     "id": "senbonzakura",
     "title": "千本桜",
     "event": "学祭2025",
-    "status": "2/4",
-    "genre": "ポップス",
-    "members": "",
-    "comment": ""
+    "composer": "黒うさP",
+    "artist": "初音ミク",
+    "leaderName": "山田太郎",
+    "leaderGeneration": 3,
+    "recruitCount": 4,
+    "genres": ["ボカロ", "邦楽"],
+    "comment": "ギター募集中！"
   },
   {
     "id": "jounetsu",
     "title": "情熱大陸",
     "event": "クリコン2025",
-    "status": "1/3",
-    "genre": "クラシック",
-    "members": "",
+    "composer": "葉加瀬太郎",
+    "artist": "",
+    "leaderName": "佐藤花子",
+    "leaderGeneration": 2,
+    "recruitCount": 3,
+    "genres": ["クラシック"],
     "comment": ""
   },
   {
-    "id": 1,
+    "id": "zankyo",
     "title": "残響散歌",
     "event": "皐槻祭2025",
-    "status": "2/4",
-    "genre": "アニソン",
-    "members": "Fl, Ob, Hr, Pf",
+    "composer": "梶浦由記",
+    "artist": "Aimer",
+    "leaderName": "高橋光",
+    "leaderGeneration": 4,
+    "recruitCount": 4,
+    "genres": ["アニメ", "J-POP"],
     "comment": "誰でも歓迎です！"
   }
 ]

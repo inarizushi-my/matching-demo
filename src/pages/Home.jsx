@@ -15,12 +15,12 @@ function Home() {
         <div className="flex flex-col gap-6 items-center w-full">
           <Link to="/recruit" className="w-full">
             <button className="w-full max-w-xs mx-auto text-lg md:text-xl bg-blue-500 text-white py-4 rounded hover:bg-blue-600 transition">
-              募集一覧
+              曲の募集一覧
             </button>
           </Link>
           <Link to="/performer" className="w-full">
             <button className="w-full max-w-xs mx-auto text-lg md:text-xl bg-green-500 text-white py-4 rounded hover:bg-green-600 transition">
-              人材一覧
+              演奏者一覧
             </button>
           </Link>
           <Link to="/entry" className="w-full">

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { eventYearMap } from "../data/eventYears";
 
 const genreOptions = [
@@ -18,12 +19,12 @@ function PerformerForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleGenreChange = (e) => {
     const { value, checked } = e.target;
-    setFormData(prev => {
+    setFormData((prev) => {
       const newGenres = checked
         ? [...prev.genres, value].slice(0, 3)
         : prev.genres.filter((g) => g !== value);
@@ -34,7 +35,7 @@ function PerformerForm() {
   const handleArtistChange = (index, value) => {
     const updated = [...formData.favoriteArtists];
     updated[index] = value;
-    setFormData(prev => ({ ...prev, favoriteArtists: updated }));
+    setFormData((prev) => ({ ...prev, favoriteArtists: updated }));
   };
 
   const handleSubmit = (e) => {
@@ -47,119 +48,126 @@ function PerformerForm() {
   );
 
   return (
-    <form className="max-w-xl mx-auto p-4 space-y-4" onSubmit={handleSubmit}>
-      <h2 className="text-xl font-bold text-center">演奏者登録フォーム</h2>
+    <div className="relative min-h-screen p-6 pt-16 max-w-xl mx-auto">
+      {/* 戻るボタン */}
+      <div className="absolute top-4 left-4">
+        <Link to="/entry">
+          <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+            新規登録メニューに戻る
+          </button>
+        </Link>
+      </div>
 
-      {/* イベント選択 */}
-      <label className="block">
-        イベント名：
-        <select
-          name="event"
-          value={formData.event}
-          onChange={handleChange}
-          required
-          className="w-full border p-2 rounded"
-        >
-          <option value="">選択してください</option>
-          {fullEventList.map((e) => (
-            <option key={e} value={e}>{e}</option>
-          ))}
-        </select>
-      </label>
+      <form className="space-y-4" onSubmit={handleSubmit}>
+        <h2 className="text-xl font-bold text-center">演奏者登録フォーム</h2>
 
-      {/* 名前・代・空き曲数 */}
-      <label className="block">
-        名前：
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          className="w-full border p-2 rounded"
-        />
-      </label>
+        <label className="block">
+          イベント名：
+          <select
+            name="event"
+            value={formData.event}
+            onChange={handleChange}
+            required
+            className="w-full border p-2 rounded"
+          >
+            <option value="">選択してください</option>
+            {fullEventList.map((e) => (
+              <option key={e} value={e}>{e}</option>
+            ))}
+          </select>
+        </label>
 
-      <label className="block">
-        代：
-        <input
-          type="text"
-          name="generation"
-          value={formData.generation}
-          onChange={handleChange}
-          required
-          className="w-full border p-2 rounded"
-        />
-      </label>
+        <label className="block">
+          名前：
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            className="w-full border p-2 rounded"
+          />
+        </label>
 
-      <label className="block">
-        空き曲数（例：3）：
-        <input
-          type="number"
-          name="availability"
-          value={formData.availability}
-          onChange={handleChange}
-          required
-          min="0"
-          className="w-full border p-2 rounded"
-        />
-      </label>
+        <label className="block">
+          代（数字のみ）：
+          <input
+            type="number"
+            name="generation"
+            value={formData.generation}
+            onChange={handleChange}
+            required
+            min="1"
+            className="w-full border p-2 rounded"
+          />
+        </label>
 
-      {/* ジャンル（最大3） */}
-      <fieldset>
-        <legend className="font-medium mb-2">弾きたいジャンル（最大3つ）:</legend>
-        <div className="flex flex-wrap gap-2">
-          {genreOptions.map((g) => (
-            <label key={g} className="flex items-center space-x-1">
+        <label className="block">
+          空き曲数（0〜5）：
+          <input
+            type="number"
+            name="availability"
+            value={formData.availability}
+            onChange={handleChange}
+            required
+            min="0"
+            max="5"
+            className="w-full border p-2 rounded"
+          />
+        </label>
+
+        <fieldset>
+          <legend className="font-medium mb-2">弾きたいジャンル（最大3つ）:</legend>
+          <div className="flex flex-wrap gap-2">
+            {genreOptions.map((g) => (
+              <label key={g} className="flex items-center space-x-1">
+                <input
+                  type="checkbox"
+                  value={g}
+                  checked={formData.genres.includes(g)}
+                  onChange={handleGenreChange}
+                />
+                <span>{g}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <label className="block">
+          好きなアーティスト（最大3人）：
+          <div className="space-y-2 mt-1">
+            {formData.favoriteArtists.map((artist, idx) => (
               <input
-                type="checkbox"
-                value={g}
-                checked={formData.genres.includes(g)}
-                onChange={handleGenreChange}
+                key={idx}
+                type="text"
+                value={artist}
+                onChange={(e) => handleArtistChange(idx, e.target.value)}
+                className="w-full border p-2 rounded"
+                placeholder={`アーティスト${idx + 1}`}
               />
-              <span>{g}</span>
-            </label>
-          ))}
-        </div>
-      </fieldset>
+            ))}
+          </div>
+        </label>
 
-      {/* 好きなアーティスト（最大3） */}
-      <label className="block">
-        好きなアーティスト（最大3人）：
-        <div className="space-y-2 mt-1">
-          {formData.favoriteArtists.map((artist, idx) => (
-            <input
-              key={idx}
-              type="text"
-              value={artist}
-              onChange={(e) => handleArtistChange(idx, e.target.value)}
-              className="w-full border p-2 rounded"
-              placeholder={`アーティスト${idx + 1}`}
-            />
-          ))}
-        </div>
-      </label>
+        <label className="block">
+          自由記述欄（任意）：
+          <textarea
+            name="comment"
+            value={formData.comment}
+            onChange={handleChange}
+            className="w-full border p-2 rounded"
+            rows="3"
+          />
+        </label>
 
-      {/* 自由記述欄 */}
-      <label className="block">
-        自由記述欄（任意）：
-        <textarea
-          name="comment"
-          value={formData.comment}
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-          rows="3"
-        />
-      </label>
-
-      {/* 送信ボタン */}
-      <button
-        type="submit"
-        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-      >
-        登録する
-      </button>
-    </form>
+        <button
+          type="submit"
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+        >
+          登録する
+        </button>
+      </form>
+    </div>
   );
 }
 

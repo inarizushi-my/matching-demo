@@ -7,6 +7,7 @@ import PerformerDetail from "./components/PerformerDetail";
 import RegisterMenu from "./components/RegisterMenu";
 import RecruitForm from "./components/RecruitForm";
 import PerformerForm from "./components/PerformerForm";
+import MatchMenu from "./components/MatchMenu";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/entry" element={<RegisterMenu />} />
         <Route path="/entry/recruit" element={<RecruitForm />} />
         <Route path="/entry/performer" element={<PerformerForm />} />
+        <Route path="/matching" element={<MatchMenu />} />
       </Routes>
     </Router>
   );
