@@ -1,10 +1,22 @@
 [
   {
     "id": 1,
+    "event": "皐槻祭2025",
     "name": "田中 太郎",
     "generation": 12,
-    "event": "皐槻祭",
     "slots": 2,
+    "genres": ["アニメ", "J-POP"],
+    "favoriteArtists": ["YOASOBI", "米津玄師"],
     "comment": "伴奏も好きです。よろしくお願いします！"
+  },
+  {
+    "id": 2,
+    "event": "タナコン2025",
+    "name": "鈴木 花子",
+    "generation": 11,
+    "slots": 1,
+    "genres": ["ゲーム", "ボカロ", "ネタ枠"],
+    "favoriteArtists": ["すとぷり", "Aimer", "Supercell"],
+    "comment": "ボカロ曲に挑戦したいです！"
   }
 ]
