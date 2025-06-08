@@ -16,13 +16,13 @@ function MatchMenu() {
       <h2 className="text-3xl font-bold mb-6">マッチングメニュー</h2>
 
       {/* ボタン */}
-      <Link to="/match/recruit" className="w-full max-w-xs">
+      <Link to="/matching/recruit" className="w-full max-w-xs">
         <button className="w-full bg-blue-600 text-white text-xl px-8 py-4 rounded-2xl shadow hover:bg-blue-700 transition">
           曲のマッチング
         </button>
       </Link>
 
-      <Link to="/match/performer" className="w-full max-w-xs">
+      <Link to="/matching/performer" className="w-full max-w-xs">
         <button className="w-full bg-green-600 text-white text-xl px-8 py-4 rounded-2xl shadow hover:bg-green-700 transition">
           人のマッチング
         </button>

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { eventYearMap } from "../data/eventYears";
+import { supabase } from "../lib/supabaseClient"; // supabase 接続用
 
 const genreOptions = [
   "ドラマ", "アニメ", "映画", "ゲーム", "J-POP", "K-POP", "邦楽", "洋楽", "ボカロ", "ネタ枠", "その他"
@@ -15,6 +16,7 @@ function PerformerForm() {
     genres: [],
     favoriteArtists: ["", "", ""],
     comment: "",
+    email: "",
   });
 
   const handleChange = (e) => {
@@ -38,9 +40,39 @@ function PerformerForm() {
     setFormData((prev) => ({ ...prev, favoriteArtists: updated }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("送信データ:", formData);
+
+    const { event, name, generation, availability, genres, favoriteArtists, comment, email } = formData;
+
+    const { error } = await supabase.from("performers").insert([
+      {
+        event,
+        name,
+        generation: parseInt(generation),
+        available: parseInt(availability),
+        genres,
+        artists: favoriteArtists.filter((a) => a.trim() !== ""),
+        note: comment,
+        email: email.trim() || null,
+      },
+    ]);
+
+    if (error) {
+      alert("登録に失敗しました：" + error.message);
+    } else {
+      alert("登録が完了しました！");
+      setFormData({
+        event: "",
+        name: "",
+        generation: "",
+        availability: "",
+        genres: [],
+        favoriteArtists: ["", "", ""],
+        comment: "",
+        email: "",
+      });
+    }
   };
 
   const fullEventList = Object.entries(eventYearMap).map(
@@ -49,7 +81,6 @@ function PerformerForm() {
 
   return (
     <div className="relative min-h-screen p-6 pt-16 max-w-xl mx-auto">
-      {/* 戻るボタン */}
       <div className="absolute top-4 left-4">
         <Link to="/entry">
           <button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
@@ -75,6 +106,18 @@ function PerformerForm() {
               <option key={e} value={e}>{e}</option>
             ))}
           </select>
+        </label>
+
+        <label className="block">
+          メールアドレス（編集用リンク送付先）：
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full border p-2 rounded"
+            placeholder="example@example.com"
+          />
         </label>
 
         <label className="block">

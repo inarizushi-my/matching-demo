@@ -1,9 +1,40 @@
 import { useParams, Link } from "react-router-dom";
-import data from "../data/sample_recruit.json";
+import { useEffect, useState } from "react";
+import { supabase } from "../lib/supabaseClient";
 
 function RecruitDetail() {
   const { id } = useParams();
-  const item = data.find((entry) => entry.id.toString() === id);
+  const [item, setItem] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchItem = async () => {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("recruits")
+        .select("*")
+        .eq("id", id)
+        .single();
+
+      if (error) {
+        console.error("データ取得エラー:", error);
+        setItem(null);
+      } else {
+        setItem(data);
+      }
+      setLoading(false);
+    };
+
+    fetchItem();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-center">
+        <p className="text-xl text-gray-500">読み込み中...</p>
+      </div>
+    );
+  }
 
   if (!item) {
     return (
@@ -32,9 +63,9 @@ function RecruitDetail() {
         <InfoRow label="イベント" value={item.event} />
         <InfoRow label="作曲者" value={item.composer || "未記入"} />
         <InfoRow label="アーティスト" value={item.artist || "未記入"} />
-        <InfoRow label="アンサリーダー" value={`${item.leaderName}（${item.leaderGeneration}代）`} />
-        <InfoRow label="募集人数" value={`${item.recruitCount}人`} />
-        <InfoRow label="ジャンル" value={(item.genres && item.genres.length > 0) ? item.genres.join("、") : "未記入"} />
+        <InfoRow label="アンサリーダー" value={`${item.leader}（${item.generation}代）`} />
+        <InfoRow label="募集人数" value={`${item.capacity}人`} />
+        <InfoRow label="ジャンル" value={item.genres && item.genres.length > 0 ? item.genres.join("、") : "未記入"} />
         {item.comment && <InfoRow label="コメント" value={item.comment} />}
       </div>
     </div>

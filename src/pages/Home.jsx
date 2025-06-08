@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+import HamburgerMenu from "../components/HamburgerMenu";
 
 function Home() {
   return (
     <div className="h-screen flex items-center justify-center bg-white relative px-4">
       {/* ハンバーガーメニュー */}
       <div className="absolute top-4 right-4">
-        <button className="text-2xl font-bold">☰</button>
+        <HamburgerMenu />
       </div>
 
       {/* 中央のメインコンテンツ */}

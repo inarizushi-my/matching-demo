@@ -8,12 +8,17 @@ import RegisterMenu from "./components/RegisterMenu";
 import RecruitForm from "./components/RecruitForm";
 import PerformerForm from "./components/PerformerForm";
 import MatchMenu from "./components/MatchMenu";
+import MatchMusic from "./components/MatchMusic";
+import MatchPerformer from "./components/MatchPerformer"; 
+import RegisterHistoryPage from "./components/RegisterHistoryPage";
+import EditEntryPage from "./pages/EditEntryPage";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/history" element={<RegisterHistoryPage />} />
         <Route path="/recruit" element={<RecruitList />} />
         <Route path="/performer" element={<PerformerList />} />
         <Route path="/recruit/:id" element={<RecruitDetail />} />
@@ -22,6 +27,11 @@ function App() {
         <Route path="/entry/recruit" element={<RecruitForm />} />
         <Route path="/entry/performer" element={<PerformerForm />} />
         <Route path="/matching" element={<MatchMenu />} />
+        <Route path="/matching/recruit" element={<MatchMusic />} />
+        <Route path="/matching/performer" element={<MatchPerformer />} />
+        <Route path="/edit/:type/:id" element={<EditEntryPage />} />
+
+
       </Routes>
     </Router>
   );
