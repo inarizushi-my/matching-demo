@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import sampleRecruits from "../data/sample_recruits.json";  // サンプルデータ読み込み
 
 function RecruitDetail() {
   const { id } = useParams();
@@ -8,24 +8,11 @@ function RecruitDetail() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchItem = async () => {
-      setLoading(true);
-      const { data, error } = await supabase
-        .from("recruits")
-        .select("*")
-        .eq("id", id)
-        .single();
-
-      if (error) {
-        console.error("データ取得エラー:", error);
-        setItem(null);
-      } else {
-        setItem(data);
-      }
-      setLoading(false);
-    };
-
-    fetchItem();
+    setLoading(true);
+    // サンプルデータからidに合致する募集を検索
+    const found = sampleRecruits.find((r) => String(r.id) === String(id));
+    setItem(found || null);
+    setLoading(false);
   }, [id]);
 
   if (loading) {
