@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { supabase } from "../lib/supabaseClient";
 import { eventYearMap } from "../data/eventYears";
+import samplePerformers from "../data/sample_performers.json";
 
 function PerformerList() {
   const [selectedEvent, setSelectedEvent] = useState("");
@@ -16,80 +16,11 @@ function PerformerList() {
   );
 
   useEffect(() => {
-    const fetchPerformers = async () => {
-      const { data, error } = await supabase
-        .from("performers")
-        .select("*");
-
-      if (error) {
-        console.error("演奏者データの取得エラー:", error);
-      } else {
-        setPerformers(data);
-      }
-    };
-
-    fetchPerformers();
+    setPerformers(samplePerformers);
   }, []);
 
   const handleInvite = async (performer, event) => {
-    if (!recruiterEmail.trim() || !recruitTitle.trim()) {
-      alert("メールアドレスと曲名を入力してください。");
-      return;
-    }
-
-    const { data: recruits, error: recruitError } = await supabase
-      .from("recruits")
-      .select("id")
-      .eq("email", recruiterEmail.trim())
-      .eq("title", recruitTitle.trim())
-      .eq("event", event);
-
-    if (recruitError) {
-      alert("確認中にエラーが発生しました。");
-      return;
-    }
-
-    if (!recruits || recruits.length === 0) {
-      alert("該当の曲募集が見つかりません。");
-      return;
-    }
-
-    const recruitId = recruits[0].id;
-
-    const { data: existing, error: checkError } = await supabase
-      .from("invitations")
-      .select("*")
-      .eq("recruit_id", recruitId)
-      .eq("performer_id", performer.id);
-
-    if (checkError) {
-      alert("確認中にエラーが発生しました。");
-      return;
-    }
-
-    if (existing.length > 0) {
-      alert("すでに招待済みです。");
-      return;
-    }
-
-    const { error } = await supabase.from("invitations").insert([
-      {
-        recruit_id: recruitId,
-        performer_id: performer.id,
-        inviter_email: recruiterEmail.trim(),
-        message: message.trim(),
-      },
-    ]);
-
-    if (error) {
-      alert("招待に失敗しました。もう一度お試しください。");
-    } else {
-      alert(`${performer.name} さんを招待しました！`);
-      setInviteFormId(null);
-      setRecruiterEmail("");
-      setRecruitTitle("");
-      setMessage("");
-    }
+    alert("デモモードでは招待機能は使用できません。");
   };
 
   const filteredData =
