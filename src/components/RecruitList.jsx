@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { eventYearMap } from "../data/eventYears";
-import { supabase } from "../lib/supabaseClient";
+import sampleData from "../data/sample_recruits.json"; // supabaseの代わりにサンプルデータを使用
 
 function RecruitList() {
   const [filter, setFilter] = useState("");
@@ -16,74 +16,16 @@ function RecruitList() {
   );
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const { data, error } = await supabase.from("recruits").select("*");
-      if (error) {
-        console.error("Supabase取得エラー:", error);
-      } else {
-        setData(data);
-      }
-      setLoading(false);
-    };
-
-    fetchData();
+    setLoading(true);
+    setData(sampleData); // サンプルデータをセット
+    setLoading(false);
   }, []);
 
   const handleApply = async (recruitId, title) => {
-    if (!email.trim()) {
-      alert("メールアドレスは必須です。\n送信前に入力してください。");
-      return;
-    }
-
-    // 🔍 performers に登録されているか確認
-    const { data: performerCheck, error: performerError } = await supabase
-      .from("performers")
-      .select("*")
-      .eq("email", email.trim());
-
-    if (performerError) {
-      alert("演奏者確認中にエラーが発生しました。");
-      return;
-    }
-
-    if (!performerCheck || performerCheck.length === 0) {
-      alert("このメールアドレスは演奏者として登録されていません。");
-      return;
-    }
-
-    const { data: existing, error: checkError } = await supabase
-      .from("applications")
-      .select("*")
-      .eq("recruit_id", recruitId)
-      .eq("performer_email", email.trim());
-
-    if (checkError) {
-      alert("確認中にエラーが発生しました。");
-      return;
-    }
-
-    if (existing.length > 0) {
-      alert("すでに立候補しています。");
-      return;
-    }
-
-    const { error } = await supabase.from("applications").insert([
-      {
-        recruit_id: recruitId,
-        performer_email: email.trim(),
-        message: message.trim(),
-      },
-    ]);
-
-    if (error) {
-      alert("送信に失敗しました。もう一度お試しください。");
-    } else {
-      alert(`${title} に立候補を送信しました！`);
-      setShowFormId(null);
-      setEmail("");
-      setMessage("");
-    }
+    alert("デモモードでは立候補できません。");
+    setShowFormId(null);
+    setEmail("");
+    setMessage("");
   };
 
   const filteredData = filter
